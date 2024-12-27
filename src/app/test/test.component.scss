@@ -1,0 +1,51 @@
+body {
+  background-color: lightblue;
+}
+
+/* This is a comment*/
+p {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 20px;
+}
+
+h1 {
+  color:  /* purple*/purple;
+  text-align: center;
+}
+
+#para1{
+  text-align: center; /* Comments center*/
+  color: yellowgreen;
+}
+
+.center{
+  text-align: center;
+}
+
+.large{
+  font-size: 22px;
+}
+
+p.center{
+  color: green;
+}
+
+* {
+  color: darkorange;
+}
+
+h1, h2, p{
+  text-align: center;
+  color: red;
+}
+
+div{
+  height: 50px;
+  background-color: darkgoldenrod;
+  opacity: 0.3;
+}
+
+div{
+  height: 50px;
+  background-color: rgba($color: #f00, $alpha: 0.2);
+}

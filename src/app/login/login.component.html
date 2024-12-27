@@ -1,0 +1,21 @@
+<div class="login-container">
+  <h2>登录系统</h2>
+  <form (ngSubmit)="onLogin()" class="login-form">
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>用户名</mat-label>
+      <input matInput [(ngModel)]="username" name="username">
+      <mat-icon matPrefix>person</mat-icon>
+    </mat-form-field>
+    
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>密码</mat-label>
+      <input matInput type="password" [(ngModel)]="password" name="password">
+      <mat-icon matPrefix>lock</mat-icon>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" type="submit" class="login-button">
+      <mat-icon>login</mat-icon>
+      登录
+    </button>
+  </form>
+</div>
