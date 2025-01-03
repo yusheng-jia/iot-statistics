@@ -1,0 +1,389 @@
+{
+  "rows": [
+      {
+          "productCode": "NUMI2",
+          "datas": [
+              {
+                  "cmdCode": "MEM_READ",
+                  "distribution": {
+                      "2023": 61,
+                      "total": 61
+                  },
+                  "paramsDistribution": {
+                      "2023": [
+                          {
+                              "chain": 65,
+                              "link": 0
+                          },
+                          {
+                              "chain": 63,
+                              "link": 50
+                          },
+                          {
+                              "chain": 68,
+                              "link": 22
+                          },
+                          {
+                              "chain": 64,
+                              "link": 30
+                          },
+                          {
+                              "chain": 68,
+                              "link": 20
+                          },
+                          {
+                              "chain": 67,
+                              "link": 12
+                          },
+                          {
+                              "chain": 68,
+                              "link": 21
+                          },
+                          {
+                              "chain": 67,
+                              "link": 20
+                          },
+                          {
+                              "chain": 60,
+                              "link": 61
+                          },
+                          {
+                              "chain": 68,
+                              "link": 22
+                          },
+                          {
+                              "chain": 68,
+                              "link": 20
+                          },
+                          {
+                              "chain": 63,
+                              "link": 50
+                          },
+                          {
+                              "chain": 65,
+                              "link": 0
+                          },
+                          {
+                              "chain": 64,
+                              "link": 30
+                          },
+                          {
+                              "chain": 68,
+                              "link": 21
+                          },
+                          {
+                              "chain": 67,
+                              "link": 12
+                          },
+                          {
+                              "chain": 67,
+                              "link": 20
+                          },
+                          {
+                              "chain": 60,
+                              "link": 61
+                          },
+                          {
+                              "chain": 63,
+                              "link": 50
+                          },
+                          {
+                              "chain": 68,
+                              "link": 22
+                          },
+                          {
+                              "chain": 64,
+                              "link": 30
+                          },
+                          {
+                              "chain": 65,
+                              "link": 0
+                          },
+                          {
+                              "chain": 68,
+                              "link": 20
+                          },
+                          {
+                              "chain": 68,
+                              "link": 21
+                          },
+                          {
+                              "chain": 67,
+                              "link": 12
+                          },
+                          {
+                              "chain": 67,
+                              "link": 20
+                          },
+                          {
+                              "chain": 60,
+                              "link": 61
+                          },
+                          {
+                              "chain": 65,
+                              "link": 0
+                          },
+                          {
+                              "chain": 68,
+                              "link": 22
+                          },
+                          {
+                              "chain": 63,
+                              "link": 50
+                          },
+                          {
+                              "chain": 68,
+                              "link": 20
+                          },
+                          {
+                              "chain": 64,
+                              "link": 30
+                          },
+                          {
+                              "chain": 67,
+                              "link": 20
+                          },
+                          {
+                              "chain": 60,
+                              "link": 61
+                          },
+                          {
+                              "chain": 67,
+                              "link": 12
+                          },
+                          {
+                              "chain": 63,
+                              "link": 50
+                          },
+                          {
+                              "chain": 68,
+                              "link": 20
+                          },
+                          {
+                              "chain": 64,
+                              "link": 30
+                          },
+                          {
+                              "chain": 65,
+                              "link": 0
+                          },
+                          {
+                              "chain": 68,
+                              "link": 21
+                          },
+                          {
+                              "chain": 68,
+                              "link": 22
+                          },
+                          {
+                              "chain": 67,
+                              "link": 12
+                          },
+                          {
+                              "chain": 67,
+                              "link": 20
+                          },
+                          {
+                              "chain": 60,
+                              "link": 61
+                          },
+                          {
+                              "chain": 63,
+                              "link": 50
+                          },
+                          {
+                              "chain": 68,
+                              "link": 22
+                          },
+                          {
+                              "chain": 68,
+                              "link": 20
+                          },
+                          {
+                              "chain": 64,
+                              "link": 30
+                          },
+                          {
+                              "chain": 65,
+                              "link": 0
+                          },
+                          {
+                              "chain": 68,
+                              "link": 21
+                          },
+                          {
+                              "chain": 67,
+                              "link": 12
+                          },
+                          {
+                              "chain": 67,
+                              "link": 20
+                          },
+                          {
+                              "chain": 60,
+                              "link": 61
+                          },
+                          {
+                              "chain": 68,
+                              "link": 20
+                          },
+                          {
+                              "chain": 64,
+                              "link": 30
+                          },
+                          {
+                              "chain": 68,
+                              "link": 22
+                          },
+                          {
+                              "chain": 63,
+                              "link": 50
+                          },
+                          {
+                              "chain": 65,
+                              "link": 0
+                          },
+                          {
+                              "chain": 67,
+                              "link": 12
+                          },
+                          {
+                              "chain": 67,
+                              "link": 20
+                          },
+                          {
+                              "chain": 60,
+                              "link": 61
+                          }
+                      ]
+                  }
+              },
+              {
+                  "cmdCode": "STATUS_ALL_REQ",
+                  "distribution": {
+                      "2023": 26,
+                      "2024": 2,
+                      "total": 28
+                  },
+                  "paramsDistribution": {}
+              },
+              {
+                  "cmdCode": "SET_RING_PARA",
+                  "distribution": {
+                      "2023": 2,
+                      "2024": 4,
+                      "total": 6
+                  },
+                  "paramsDistribution": {
+                      "2023": [
+                          {
+                              "TEMP": "mid_high"
+                          },
+                          {
+                              "TEMP": "off"
+                          }
+                      ],
+                      "2024": [
+                          {
+                              "TEMP": "low_mid"
+                          },
+                          {
+                              "TEMP": "low_mid"
+                          },
+                          {
+                              "TEMP": "low_mid"
+                          },
+                          {
+                              "TEMP": "high"
+                          }
+                      ]
+                  }
+              },
+              {
+                  "cmdCode": "STOP_ALL",
+                  "distribution": {
+                      "2023": 6,
+                      "total": 6
+                  },
+                  "paramsDistribution": {}
+              },
+              {
+                  "cmdCode": "OPERATE_MULTIMEDIA",
+                  "distribution": {
+                      "2023": 3,
+                      "total": 3
+                  },
+                  "paramsDistribution": {
+                      "2023": [
+                          {
+                              "OP": "enable"
+                          },
+                          {
+                              "OP": "enable"
+                          },
+                          {
+                              "OP": "enable"
+                          }
+                      ]
+                  }
+              },
+              {
+                  "cmdCode": "SET_LIGHT_PARA",
+                  "distribution": {
+                      "2023": 3,
+                      "total": 3
+                  },
+                  "paramsDistribution": {
+                      "2023": [
+                          {
+                              "LUMI": 5,
+                              "THEME": "ocean",
+                              "MSP": "normal"
+                          },
+                          {
+                              "LUMI": 5,
+                              "THEME": "ocean",
+                              "MSP": "normal"
+                          },
+                          {
+                              "LUMI": 5,
+                              "THEME": "ocean",
+                              "MSP": "normal"
+                          }
+                      ]
+                  }
+              },
+              {
+                  "cmdCode": "SET_MUSIC_PARA",
+                  "distribution": {
+                      "2023": 3,
+                      "total": 3
+                  },
+                  "paramsDistribution": {
+                      "2023": [
+                          {
+                              "VOL": 9,
+                              "BASS": 50,
+                              "TRE": 50,
+                              "BAL": 50
+                          },
+                          {
+                              "VOL": 9,
+                              "BASS": 50,
+                              "TRE": 50,
+                              "BAL": 50
+                          },
+                          {
+                              "VOL": 9,
+                              "BASS": 50,
+                              "TRE": 50,
+                              "BAL": 50
+                          }
+                      ]
+                  }
+              }
+          ]
+      }
+  ],
+  "success": true
+}
