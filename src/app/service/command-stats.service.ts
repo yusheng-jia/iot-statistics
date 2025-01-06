@@ -1,31 +1,56 @@
 import { Injectable } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { map, Observable } from "rxjs";
 
-interface ChainLinkFunction{
-  chain: number,
-  link: number,
-  functionName: string
+interface Distribution {
+  [year: string]: number;
+  total: number;
 }
 
-interface CommandStats {
+interface ParamsDistributionItem {
+  chain?: number;
+  link?: number;
+  TEMP?: string;
+  OP?: string;
+  LUMI?: number;
+  THEME?: string;
+  MSP?: string;
+  VOL?: number;
+  BASS?: number;
+  TRE?: number;
+  BAL?: number;
+}
+
+export interface ParamsDistribution {
+  [year: string]: ParamsDistributionItem[];
+}
+
+export interface DataItem {
   cmdCode: string;
-  totalUsage: number;
-  yearlyUsage: { [year: string]: number };
-  functionDistribution: {
-    [functionName: string]: number;
-  };
-  unknownCombinations: Array<{ chain: number; link: number; count: number }>;
+  distribution: Distribution;
+  paramsDistribution: ParamsDistribution;
 }
 
-interface ProductStats{
+export interface ProductData {
   productCode: string;
-  commands: CommandStats[];
+  datas: DataItem[];
 }
 
+export interface ChainLinkFunction {
+  chain: number;
+  link: number;
+  functionName: string;
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class CommandStatsService {
+
+  productData: ProductData | undefined;
+  functionCounts: { [year: string]: { [functionName: string]: number } } = {};
+
+  constructor(private http: HttpClient) {}
 
   private functionMap: ChainLinkFunction[] = [
     { chain: 60, link: 61, functionName: 'Toilet Power Save Mode' },
@@ -38,70 +63,56 @@ export class CommandStatsService {
     { chain: 68, link: 21, functionName: 'Auto UV' },
     { chain: 68, link: 22, functionName: 'Setting Welcome' },
   ];
+  
 
-  analyzeProductData(data: any): ProductStats[] {
-    return data.rows.map((row: { productCode: any; datas: any; }) => {
-      return {
-        productCode: row.productCode,
-        commands: this.analyzeCommands(row.datas)
-      };
+  getProductData(): Observable<ProductData> {
+    return this.http.get<ProductData>('/iot-statistics/assets/numi2.json').pipe(
+      map((data: any) => data.rows[0])
+    );
+  }
+
+  getFunctionCounts(): Observable<{ [year: string]: { [functionName: string]: number } }> {
+    return new Observable(observer => {
+      this.getProductData().subscribe({
+        next: (data: ProductData) => {
+          this.productData = data;
+          this.calculateFunctionCounts();
+          observer.next(this.functionCounts);
+          observer.complete();
+        },
+        error: (error) => observer.error(error)
+      });
     });
   }
 
-  analyzeCommands(paramsData: any): CommandStats[] {
-    return Object.entries(paramsData).map(([cmdCode, data]) => {
-      const functionDistribution: { [key: string]: number } = {};
-      const unknownCombinations: Array<{ chain: number; link: number; count: number }> = [];
-      let totalUsage = 0;
-      const yearlyUsage: { [year: string]: number } = {};
+  calculateFunctionCounts() {
+    if (!this.productData || !this.productData.datas) {
+      return;
+    }
 
-      Object.entries(data as { [key: string]: unknown[] }).forEach(([year, params]) => {
-        yearlyUsage[year] = params.length;
-        totalUsage += params.length;
-        params.forEach((param: unknown) => {
-          if (typeof param !== 'object' || param === null) return;
-          const typedParam = param as { chain: unknown; link: unknown };
-          const chain = Number(typedParam.chain);
-          const link = Number(typedParam.link);
-          
-          const foundFunction = this.functionMap.find(f =>
-            f.chain === chain && f.link === link
-          );
-
-          if (foundFunction) {
-            functionDistribution[foundFunction.functionName] = 
-              (functionDistribution[foundFunction.functionName] || 0) + 1;
-          } else {
-            const existingUnknown = unknownCombinations.find(u => 
-              u.chain === chain && u.link === link
-            );
-
-            if (existingUnknown) {
-              existingUnknown.count++;
-            } else {
-              unknownCombinations.push({ chain, link, count: 1 });
-            }
+    this.productData.datas.forEach(dataItem => {
+      for (const year in dataItem.distribution) {
+        if (year !== 'total') { // 排除 total
+          this.functionCounts[year] = this.functionCounts[year] || {};
+          this.functionCounts[year][dataItem.cmdCode] = (this.functionCounts[year][dataItem.cmdCode] || 0) + dataItem.distribution[year];
+        }
+      }
+      for (const year in dataItem.paramsDistribution) {
+        dataItem.paramsDistribution[year].forEach(param => {
+          if (param.chain !== undefined && param.link !== undefined) {
+            const functionName = this.getFunctionName(param.chain, param.link) || 'Unknown Function'; // 处理未找到的情况
+            this.functionCounts[year] = this.functionCounts[year] || {};
+            this.functionCounts[year][functionName] = (this.functionCounts[year][functionName] || 0) + 1;
           }
         });
-      });
-
-      return {
-        cmdCode,
-        totalUsage,
-        yearlyUsage,
-        functionDistribution,
-        unknownCombinations
-      };
+      }
     });
+
+    console.log(this.functionCounts);
   }
 
-  // addFunctionMapping(chain: number, link: number, functionName: string): void {
-  //   this.functionMap.push({ chain, link, functionName });
-  // }
-
-  // getUnknownCombinations(cmdStats: CommandStats[]): Array<{ chain: number; link: number; count: number }> {
-  //   return cmdStats.reduce((acc, cmd) => {
-  //     return [...acc, ...cmd.unknownCombinations];
-  //   }, [] as Array<{ chain: number; link: number; count: number }>);
-  // }
+  getFunctionName(chain: number, link: number): string {
+    const func = this.functionMap.find(f => f.chain === chain && f.link === link);
+    return func ? func.functionName : 'Unknown Function';
+  }
 }

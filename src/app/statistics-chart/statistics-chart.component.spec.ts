@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { StatisticsRealComponent } from './statistics-real.component';
+import { StatisticsChartComponent } from './statistics-chart.component';
 
-describe('StatisticsRealComponent', () => {
-  let component: StatisticsRealComponent;
-  let fixture: ComponentFixture<StatisticsRealComponent>;
+describe('StatisticsComponent', () => {
+  let component: StatisticsChartComponent;
+  let fixture: ComponentFixture<StatisticsChartComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [StatisticsRealComponent]
+      imports: [StatisticsChartComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(StatisticsRealComponent);
+    fixture = TestBed.createComponent(StatisticsChartComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
