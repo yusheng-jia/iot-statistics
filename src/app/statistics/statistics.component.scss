@@ -1,0 +1,56 @@
+// :host {
+//   display: block;
+//   width: 100%;
+//   height: 100%;
+// }
+
+// .container {
+//   display: flex;
+//   flex-direction: column;
+//   width: 100%;
+//   height: 100%;
+//   padding: 20px;
+//   box-sizing: border-box;
+// }
+
+.container {
+  padding: 20px;
+}
+
+.statistics-card {
+  width: 100%;
+  margin: 0 auto;
+}
+
+.button-container {
+  display: flex;
+  gap: 20px;
+  margin-top: 20px;
+  justify-content: center;
+}
+
+button {
+  min-width: 150px;
+  font-size: 16px;  // 增加按钮文字大小
+  font-weight: 500; // 设置字体粗细
+}
+
+mat-icon {
+  margin-right: 8px;
+}
+
+// 新增标题样式
+mat-card-title h1 {
+  font-size: 28px;
+  font-weight: 600;
+  color: #2c3e50;
+  margin: 0;
+  padding: 10px 0;
+}
+
+// 新增副标题样式
+mat-card-subtitle {
+  font-size: 16px;
+  color: #7f8c8d;
+  margin-bottom: 20px;
+}

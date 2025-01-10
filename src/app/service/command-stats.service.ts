@@ -42,9 +42,30 @@ export interface ChainLinkFunction {
   functionName: string;
 }
 
+export interface ToiletStats {
+  productCode: string;
+  statistics: {
+    morning: number;
+    afternoon: number;
+    evening: number;
+  };
+  cmdStatistics: {
+    morning: {
+      [key: string]: number;
+    };
+    afternoon: {
+      [key: string]: number;
+    };
+    evening: {
+      [key: string]: number;
+    };
+  };
+}
+
 @Injectable({
   providedIn: 'root'
 })
+
 export class CommandStatsService {
 
   productData: ProductData | undefined;
@@ -71,7 +92,7 @@ export class CommandStatsService {
     );
   }
 
-  getFunctionCounts(): Observable<{ [year: string]: { [functionName: string]: number } }> {
+  getProductFunctions(): Observable<{ [year: string]: { [functionName: string]: number } }> {
     return new Observable(observer => {
       this.getProductData().subscribe({
         next: (data: ProductData) => {
@@ -92,7 +113,7 @@ export class CommandStatsService {
 
     this.productData.datas.forEach(dataItem => {
       for (const year in dataItem.distribution) {
-        if (year !== 'total') { // 排除 total
+        if (year !== 'total' && dataItem.cmdCode !== 'MEM_READ') { // 排除 total
           this.functionCounts[year] = this.functionCounts[year] || {};
           this.functionCounts[year][dataItem.cmdCode] = (this.functionCounts[year][dataItem.cmdCode] || 0) + dataItem.distribution[year];
         }
@@ -108,11 +129,35 @@ export class CommandStatsService {
       }
     });
 
-    console.log(this.functionCounts);
+    // console.log(this.functionCounts);
   }
 
   getFunctionName(chain: number, link: number): string {
     const func = this.functionMap.find(f => f.chain === chain && f.link === link);
     return func ? func.functionName : 'Unknown Function';
+  }
+
+  getToiletStats(): Observable<ToiletStats[]> {
+    return this.http.get<any>('/iot-statistics/assets/ttt.json').pipe(
+      map(jsonData => {
+        const toiletStats: ToiletStats[] = [];
+        jsonData.rows.forEach((row: any) => {
+          toiletStats.push({
+            productCode: row.productCode,
+            statistics: {
+              morning: row.statistics.morning,
+              afternoon: row.statistics.afternoon,
+              evening: row.statistics.evening
+            },
+            cmdStatistics: {
+              morning: row.cmdStatistics.morning,
+              afternoon: row.cmdStatistics.afternoon,
+              evening: row.cmdStatistics.evening
+            }
+          });
+        });
+        return toiletStats;
+      })
+    );
   }
 }

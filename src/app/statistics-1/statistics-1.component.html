@@ -1,0 +1,30 @@
+<div class="container">
+  <mat-card class="selector-card">
+    <mat-card-content>
+      <div class="filters">
+        <mat-form-field appearance="fill">
+          <mat-label>Select Product</mat-label>
+          <mat-select [(ngModel)]="selectedProduct" (selectionChange)="onProductChange()">
+            <mat-option *ngFor="let product of toiletStats" [value]="product">
+              {{product}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+  
+        <mat-form-field appearance="fill">
+          <mat-label>Select Year</mat-label>
+          <mat-select [(ngModel)]="selectedYear" (selectionChange)="onYearChange()">
+            <mat-option *ngFor="let year of getFunctionCounts(functionCounts)" [value]="year">
+              {{year}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Chart container -->
+  <div class="chart-container">
+    <div echarts [options]="chartOption" class="chart"></div>
+  </div>
+</div>

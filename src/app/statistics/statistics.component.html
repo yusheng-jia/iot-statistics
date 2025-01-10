@@ -1,28 +1,25 @@
-<div>
-  <h3>功能统计</h3>
-  <div *ngFor="let year of getFunctionCounts(functionCounts)">
-    <h4>{{ year }} 年</h4>
-    <ul>
-      <li *ngFor="let functionName of getFunctionNames(year)">
-        {{ functionName }}: {{ functionCounts[year][functionName] }} 次
-      </li>
-    </ul>
-  </div>
-</div>
-<div *ngFor="let data of productData?.datas">
-  <h3>{{ data.cmdCode }}</h3>
-  <p>Total Distribution: {{ data.distribution.total }}</p>
-  <div *ngFor="let year of getYears(data.paramsDistribution)">
-    <h4>{{ year }} Parameters</h4>
-    <ul *ngFor="let param of data.paramsDistribution[year]">
-      <li *ngIf="param.chain && param.link">
-        Chain: {{ param.chain }}, Link: {{ param.link }}
-      </li>
-        <li *ngIf="param.TEMP">TEMP: {{ param.TEMP }}</li>
-        <li *ngIf="param.OP">OP: {{ param.OP }}</li>
-        <li *ngIf="param.LUMI">LUMI: {{ param.LUMI }}, THEME: {{ param.THEME }}, MSP: {{ param.MSP }}</li>
-        <li *ngIf="param.VOL">VOL: {{ param.VOL }}, BASS: {{ param.BASS }}, TRE: {{ param.TRE }}, BAL: {{ param.BAL }}</li>
-    </ul>
-  </div>
-</div>
+<div class="container">
+  <mat-card class="statistics-card">
+    <mat-card-header>
+      <mat-card-title>
+        <h1>IOT 产品数据统计</h1>
+      </mat-card-title>
+      <mat-card-subtitle>
+        请选择要查看的统计数据
+      </mat-card-subtitle>
+    </mat-card-header>
 
+    <mat-card-content>
+      <div class="button-container">
+        <button mat-raised-button color="primary" routerLink="/statistics-1">
+          <mat-icon>bar_chart</mat-icon>
+          统计数据1
+        </button>
+        <button mat-raised-button color="accent" routerLink="/statistics-2">
+          <mat-icon>pie_chart</mat-icon>
+          统计数据2
+        </button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

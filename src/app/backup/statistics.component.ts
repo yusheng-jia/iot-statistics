@@ -30,10 +30,10 @@ import { CommonModule } from '@angular/common';
     CommonModule
   ],
   providers: [provideEchartsCore( {echarts: () => import('echarts')})],
-  templateUrl: './statistics-chart.component.html',
-  styleUrl: './statistics-chart.component.scss'
+  templateUrl: './statistics.component.html',
+  styleUrl: './statistics.component.scss'
 })
-export class StatisticsChartComponent {
+export class StatisticsComponent {
   periods = ['1天', '1周', '1月', '1年'];
   barChartOptions: EChartsOption = {};
   roseChartOptions: EChartsOption = {};
