@@ -12,7 +12,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { FormsModule } from '@angular/forms';
-
+import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
 @Component({
   selector: 'app-statistics-2',
   standalone: true,
@@ -26,6 +27,8 @@ import { FormsModule } from '@angular/forms';
     MatInputModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatIconModule,
+    MatTooltipModule,
     FormsModule
   ],
   providers: [provideEchartsCore( {echarts: () => import('echarts')})],
@@ -37,9 +40,12 @@ export class Statistics2Component {
   toiletStats: ToiletStats[] | undefined;
   selectedProduct: ToiletStats | null = null;
   selectedPeriod: 'morning' | 'afternoon' | 'evening' = 'morning';
+  selectedYear: string = '2024';
 
   timeOptions: EChartsOption = {};
   cmdOptions: EChartsOption = {};
+
+  totalDevices: number = 2399;
 
   constructor(private commandStatsService: CommandStatsService) {} 
 
@@ -50,11 +56,13 @@ export class Statistics2Component {
   private loadData() {
     this.commandStatsService.getToiletStats().subscribe((data: ToiletStats[]) => {
       this.toiletStats = data;
+      console.log(this.toiletStats);
       this.updateTimeChart();
     });
   }
 
   onProductChange() {
+    this.updateTimeChart();
     this.updateCommandChart();
   }
 
@@ -62,7 +70,13 @@ export class Statistics2Component {
     this.updateCommandChart();
   }
 
+  onYearChange() {
+    this.updateCommandChart();
+  }
+
   private updateTimeChart() {
+    if (!this.selectedProduct) return;
+    const statistics = this.toiletStats?.filter(t => t.productCode === this.selectedProduct?.productCode);
     this.timeOptions = {
       tooltip: {
         trigger: 'axis',
@@ -73,7 +87,7 @@ export class Statistics2Component {
       },
       xAxis: {
         type: 'category',
-        data: this.toiletStats?.map(t => t.productCode) || []
+        data: statistics?.map(t => t.productCode) || []
       },
       yAxis: {
         type: 'value',
@@ -83,17 +97,17 @@ export class Statistics2Component {
         {
           name: 'Morning',
           type: 'bar',
-          data: this.toiletStats?.map(t => t.statistics.morning)
+          data: statistics?.map(t => t.statistics.morning)
         },
         {
           name: 'Afternoon',
           type: 'bar',
-          data: this.toiletStats?.map(t => t.statistics.afternoon)
+          data: statistics?.map(t => t.statistics.afternoon)
         },
         {
           name: 'Evening',
           type: 'bar',
-          data: this.toiletStats?.map(t => t.statistics.evening)
+          data: statistics?.map(t => t.statistics.evening)
         }
       ]
     };
@@ -107,21 +121,57 @@ export class Statistics2Component {
       .sort(([,a], [,b]) => (b as number) - (a as number));
       // .slice(0, 10);
 
+    const top15Commands = topCommands.slice(0, 15);
+
     this.cmdOptions = {
       tooltip: {
-        trigger: 'item',
-        formatter: '{b}: {c} ({d}%)'
+        trigger: 'item'
       },
       legend: {
-        orient: 'vertical',
-        left: 'left',
-        type: 'scroll'
+        orient: 'horizontal',
+        right: '5%',
+        type: 'scroll',
+        width: '45%',
       },
+      grid: [{
+        left: '8%',
+        right: '50%',
+        top: '10%',
+        bottom: '10%'
+      }],
+      xAxis: [{
+        gridIndex: 0,
+        type: 'value',
+        position: 'top'
+      }],
+      yAxis: [{
+        gridIndex: 0,
+        type: 'category',
+        data: top15Commands.map(([name]) => name.replace(/STATUS[_]?\d+_/i, '')),
+        inverse: true
+      }],
       series: [
         {
-          name: 'Commands',
+          name: 'Top 15 Commands',
+          type: 'bar',
+          xAxisIndex: 0,
+          yAxisIndex: 0,
+          data: top15Commands.map(([, value]) => value),
+          itemStyle: {
+            borderRadius: [0, 4, 4, 0]
+          },
+          label: {
+            show: true,
+            position: 'right',
+            formatter: '{c}',
+            fontSize: 12
+          }
+        },
+        {
+          name: 'Commands Distribution',
           type: 'pie',
           radius: ['40%', '70%'],
+          center: ['75%', '50%'],
           avoidLabelOverlap: false,
           itemStyle: {
             borderRadius: 10,
@@ -129,8 +179,9 @@ export class Statistics2Component {
             borderWidth: 2
           },
           label: {
-            show: false,
-            position: 'center'
+            show: true,
+            formatter: '{b}: {c} ({d}%)',
+            fontSize: 12
           },
           emphasis: {
             label: {
@@ -140,10 +191,12 @@ export class Statistics2Component {
             }
           },
           labelLine: {
-            show: false
+            show: true,
+            length: 10,
+            length2: 20
           },
           data: topCommands.map(([name, value]) => ({
-            name: name.replace('STATUS', ''),
+            name: name.replace(/STATUS[_]?\d+_/i, ''),
             value: value
           }))
         }

@@ -12,19 +12,36 @@
         </mat-form-field>
 
         <mat-form-field appearance="fill">
+          <mat-label>Select Year</mat-label>
+          <mat-select [(ngModel)]="selectedYear" (selectionChange)="onYearChange()" [disabled]="!selectedProduct">
+            <mat-option value="2024">2024</mat-option>
+            <mat-option value="2023">2023</mat-option>
+            <mat-option value="2022">2022</mat-option>
+            <mat-option value="2021">2021</mat-option>
+            <mat-option value="2020">2020</mat-option>
+            <mat-option value="2020 ~ 2024">2020 ~ 2024</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
           <mat-label>Select Time Period</mat-label>
           <mat-select [(ngModel)]="selectedPeriod" (selectionChange)="onPeriodChange()" [disabled]="!selectedProduct">
-            <mat-option value="morning">Morning</mat-option>
-            <mat-option value="afternoon">Afternoon</mat-option>
-            <mat-option value="evening">Evening</mat-option>
+            <mat-option value="morning">Morning (00:00-12:00)</mat-option>
+            <mat-option value="afternoon">Afternoon (12:00-18:00)</mat-option>
+            <mat-option value="evening">Evening (18:00-23:59)</mat-option>
           </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Total Devices</mat-label>
+          <input matInput [value]="'Total: ' + totalDevices" readonly disabled>
         </mat-form-field>
       </div>
     </mat-card-content>
   </mat-card>
 
   <div class="charts-container">
-    <mat-card class="chart-card">
+    <mat-card class="chart-card" *ngIf="selectedProduct && selectedPeriod">
       <mat-card-header>
         <mat-card-title>Usage Statistics</mat-card-title>
       </mat-card-header>

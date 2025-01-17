@@ -23,3 +23,9 @@
   width: 100%;
   gap: 16px;
 }
+
+.filters mat-form-field:last-child {
+  input {
+    color: rgba(0, 0, 0, 0.87); // 确保禁用状态下文字颜色正常显示
+  }
+}
